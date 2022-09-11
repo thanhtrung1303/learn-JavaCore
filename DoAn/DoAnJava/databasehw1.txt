@@ -1,0 +1,108 @@
+/*Bài 1: */
+        CREATE DATABASE blog;
+
+        CREATE TABLE post(
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            title TEXT NOT NULL,
+            content TEXT NOT NULL,
+            author_id INT,
+            thumbnail TEXT NOT NULL,
+            status TEXT NOT NULL,
+            create_at DATE NOT NULL,
+            published_at DATE NOT NULL,
+            view_count INT,
+            vote_score VARCHAR(10) NOT NULL,
+            post_type TEXT,
+            FOREIGN KEY(author_id) REFERENCES author(id)
+
+        )
+
+        CREATE TABLE author(
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            name TEXT NOT NULL
+        )
+
+        CREATE TABLE users(
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            name TEXT NOT NULL,
+            email TEXT NOT NULL,
+            mobile INT NOT NULL,
+            password TEXT NOT NULL,
+            avartar TEXT NOT NULL
+        )
+
+        CREATE TABLE tag(
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            name TEXT NOT NULL
+        )
+
+        CREATE TABLE post_tag(
+            post_id INT,
+            tag_id INT,
+            PRIMARY KEY(post_id,tag_id),
+            FOREIGN KEY(post_id) REFERENCES post(id),
+            FOREIGN KEY(tag_id) REFERENCES tag(id)
+        )
+
+        CREATE TABLE discuss(
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            post_id INT,
+            author_id INT,
+            text Text,
+            is_public TEXT,
+            create_at DATE NOT NULL,
+            FOREIGN KEY(post_id) REFERENCES post(id),
+            FOREIGN KEY(author_id) REFERENCES author(id)
+
+        )
+
+        /*Bài 2: */
+
+        CREATE DATABASE film;
+
+        CREATE TABLE film(
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            title TEXT NOT NULL,
+            description TEXT NOT NULL,
+            poster TEXT NOT NULL,
+            length INT NOT NULL,
+            rating VARCHAR(10) NOT NULL,
+            id_directors INT NOT NULL,
+            release_date DATE NOT NULL,
+            FOREIGN KEY(id_directors) REFERENCES directors(id)
+        )
+
+        CREATE TABLE directors(
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            name TEXT NOT NULL,
+            avartar TEXT NOT NULL,
+            description TEXT NOT NULL
+        )
+
+        CREATE TABLE actor(
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            last_name TEXT NOT NULL,
+            first_name TEXT NOT NULL,
+            avartar TEXT
+        )
+
+        CREATE TABLE film_actor(
+            id_film INT,
+            id_actor INT,
+            PRIMARY KEY(id_film,id_actor),
+            FOREIGN KEY(id_film) REFERENCES film(id),
+            FOREIGN KEY(id_actor) REFERENCES actor(id)
+        )
+
+        CREATE TABLE category(
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            name TEXT NOT NULL
+        )
+
+        CREATE TABLE film_category(
+            id_film INT,
+            id_category INT,
+            PRIMARY KEY(id_film,id_category),
+            FOREIGN KEY(id_film) REFERENCES film(id),
+            FOREIGN KEY(id_category) REFERENCES category(id)
+        )
